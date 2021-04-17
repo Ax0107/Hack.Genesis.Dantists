@@ -1,0 +1,314 @@
+src/config/const_loc.py
+src/config/settings_loc.py
+config/const_loc.py
+config/gunicorn.conf.py
+config/redis.cfg
+config/settings_loc.py
+
+*.pyc
+*.log
+*.rdb
+*.out
+*.conf
+*.cfg
+*.cfg.py
+
+*.pid
+
+config.json
+streams.txt
+/experiments
+/build
+/dist
+/__pycache__
+/gunicorn_reloader
+
+# Directories with table files
+#/experiments/**/tmp/
+/tmp
+/files
+/table/files/
+/table/tmp/
+/table_app/files/
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+/.idea
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Editor-based Rest Client
+.idea/httpRequests
+
+# Ignores the whole .idea folder and all .iml files
+.idea/
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
+
+# Sonarlint plugin
+.idea/sonarlint
+
+# Sphinx documentation
+docs/_build/
+
+# OS generated files
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Byte-compiled / optimized / DLL files
+__pycache__
+src/__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/*
+!lib/components/
+!lib/fonts/
+!lib/workers
+!lib/index.js
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+*.py,cover
+cover/
+
+# Translations
+*.mo
+*.pot
+*.log
+
+# Scrapy stuff:
+.scrapy
+
+# PyBuilder
+target/
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Environments
+.venv
+# env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Pyre type checker
+.pyre/
+
+# jyputer
+.ipynb_checkpoints/
+
+# Local dev files
+/received
+src/received
+logs/*
+src/logs/*
+appendonly.aof
+
+/config/const_loc.py
+/config/gunicorn/gunicorn.conf.py
+/config/settings_loc.py
+
+config.json
+files/streams.txt
+stream1.txt
+
+websocket_client.py
+
+*.pyc
+*.rdb
+*.out
+*.conf
+*.cfg
+*.cfg.py
+*.log*
+*.swp
+
+#
+streams.txt
+/experiments
+/src/experiments
+/build
+/dist
+/__pycache__
+/gunicorn_reloader
+
+# files table
+table_app/files/*
+**/package-lock.json
+**/yarn.lock
+
+# Boilerplate files
+*custom_components/R
+*custom_components/package-lock.json
+*custom_components/man
+*custom_components/inst/
+*custom_components/react_components/*-hmr.js
+*custom_components/react_components/*-hmr.json
+*custom_components/react_components/font
+*custom_components/react_components/fonts
+*custom_components/react_components/README.md
+*custom_components/react_components/output.js
+*custom_components/react_components/packge-info.json
+*custom_components/react_components/metadata.json
+*custom_components/NAMESPACE
+/custom_components
+
+
+node_modules
+
+
+# Directories with table files
+#/experiments/**/tmp/
+src/tmp
+src/table_app/files/
+files/streams.txt
+src/files
+/src/files
+/src/table
+
+# Boilerplate files
+react_components/R
+react_components/package-lock.json
+react_components/man
+react_components/inst/
+react_components/react_components/*-hmr.js
+react_components/react_components/*-hmr.json
+react_components/react_components/font
+react_components/react_components/fonts
+react_components/react_components/README.md
+
+react_components/react_components/output.js
+
+# Visual Studio Code
+.vscode/
+.DS_Store
+
+/source/
+/log_publisher_app.py
+/log_puller_app.py
+/meta_collected.json
+/wsgi.py
+/websocket_client.*
+/test_ws_server.py
+/*.spec
+
+/postprocess_app
+/validate
+/utility
+/tests
+/test
+/templates
+/template_app
+/tabs_from_app
+/sputnik_app
+/settings_dash
+/set_settings
+/pcovi
+/ormredis
+/layouts
+/event_app
+/src/miss/
