@@ -50,25 +50,25 @@ def calmap(ax, year, data):
     # Showing data
     ax.imshow(data, extent=[0, 53, 0, 7], zorder=10, vmin=-1, vmax=1,
               cmap="RdYlBu", origin="lower", alpha=.75)
-    return ax
 
 
-# fig = plt.figure(figsize=(8, 4.5), dpi=100)
-# X = np.linspace(-1, 1, 53 * 7)
-#
-# ax = plt.subplot(311, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
-# I = 1.2 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
-# calmap(ax, 2017, I.reshape(53, 7).T)
-#
-# ax = plt.subplot(312, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
-# I = 1.1 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
-# calmap(ax, 2018, I.reshape(53, 7).T)
-#
-# ax = plt.subplot(313, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
-# I = 1.0 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
-#
-# calmap(ax, 2019, I.reshape(53, 7).T)
-#
-# plt.tight_layout()
-# plt.show()
+fig = plt.figure(figsize=(8, 4.5), dpi=100)
+X = np.linspace(-1, 1, 53 * 7)
+
+ax = plt.subplot(311, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
+I = 1.2 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
+calmap(ax, 2017, I.reshape(53, 7).T)
+
+ax = plt.subplot(312, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
+I = 1.1 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
+calmap(ax, 2018, I.reshape(53, 7).T)
+
+ax = plt.subplot(313, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
+I = 1.0 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
+calmap(ax, 2019, I.reshape(53, 7).T)
+
+plt.tight_layout()
+plt.savefig("calendar-heatmap.png", dpi=300)
+plt.savefig("calendar-heatmap.pdf", dpi=600)
+plt.show()
 
