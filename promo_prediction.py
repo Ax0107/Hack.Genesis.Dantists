@@ -34,3 +34,9 @@ def predict(money: int, start: datetime.datetime, end: datetime.datetime, produc
     profits = softmax(profits)
 
     return profits / profits.max()
+
+
+def get_probas_for_products(month, products):
+    probas = np.array([model.predict([month, 15, product]) for product in products])
+    probas = [round(x, 2) for x in softmax(probas / probas.max())]
+    return probas

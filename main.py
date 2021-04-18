@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 from dateutil.relativedelta import relativedelta
 
-from promo_prediction import predict
+from promo_prediction import predict, get_probas_for_products
 
 import plotly.graph_objects as go
 
@@ -146,6 +146,7 @@ app.layout = html.Div([
 ])
 
 
+
 @app.callback([Output('graphs', 'children'),
               Output('calmap', 'figure')],
               [Input('btn-calculate', 'n_clicks')],
@@ -159,18 +160,23 @@ def update_output(n, budget, start_date, end_date, product):
 
     children = []
 
-    for year in range(2018, 2022):
+    start_date = datetime.datetime.fromisoformat(start_date)
+    end_date = datetime.datetime.fromisoformat(end_date)
+
+    for month in range(start_date.month, end_date.month):
+
         profit_figure = {
             "data": [
                 {
-                    "y": get_monthly_profit(str(year), sales_history),
-                    "type": "lines",
+                    'x': list(range(len(products))),
+                    "y": get_probas_for_products(month, products),
+                    "type": "bar",
                     "hovertemplate": "$%{y:.2f}<extra></extra>",
                 },
             ],
             "layout": {
                 "title": {
-                    "text": f"Прибыль в {year} году",
+                    "text": f"Распределение значимости акций по товарам для {month} месяца",
                     "x": 0.05,
                     "xanchor": "left",
                 },
@@ -179,11 +185,9 @@ def update_output(n, budget, start_date, end_date, product):
                 "colorway": ["#17B897"],
             },
         }
-        graph = dcc.Graph(id=f"profit-chart-{year}", figure=profit_figure),
+        graph = dcc.Graph(id=f"profit-chart-{month}", figure=profit_figure),
         children.append(graph[0])
 
-    start_date = datetime.datetime.fromisoformat(start_date)
-    end_date = datetime.datetime.fromisoformat(end_date)
     prediction = predict(budget, start_date, end_date, product=product, products=products)
 
     year = start_date.year
