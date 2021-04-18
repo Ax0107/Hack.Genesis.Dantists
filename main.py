@@ -121,12 +121,12 @@ app.layout = html.Div([
     ),
     html.Div([
     dbc.Button('Рассчитать', id='btn-calculate', n_clicks=0,
-               style={'margin-top': '50px', 'width': '100%'}),
+               style={'marginTop': '50px', 'width': '100%'}),
     ], className='menu'),
 
     html.Div(
         children=[
-            html.Div([], id='calmap'),
+            html.Div([], className='card', id='calmap'),
 
             html.Div(
                 children=[], id='graphs'
@@ -180,13 +180,9 @@ def update_output(n, bugdet):
     ax = plt.subplot(311, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
     I = 1.2 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
     calmap(ax, 2017, I.reshape(53, 7).T)
+    plt.savefig("assets/calendar-heatmap.png", dpi=300)
 
-    # Showing data
-    # img = ax.imshow(data, extent=[0, 53, 0, 7], zorder=10, vmin=-1, vmax=1,
-    #           cmap="RdYlBu", origin="lower", alpha=.75)
-    plt.savefig("calendar-heatmap.png", dpi=300)
-    # plt.savefig("calendar-heatmap.pdf", dpi=600)
-    return children, []
+    return children, html.Img(src=app.get_asset_url("calendar-heatmap.png"), width='auto')
 
 
 if __name__ == '__main__':
