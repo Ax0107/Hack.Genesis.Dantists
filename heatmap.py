@@ -1,4 +1,7 @@
-
+# ----------------------------------------------------------------------------
+# Author:  Nicolas P. Rougier
+# License: BSD
+# ----------------------------------------------------------------------------
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
@@ -37,9 +40,14 @@ def calmap(ax, year, data):
     ax.set_yticklabels(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
     ax.set_title("{}".format(year), weight="semibold")
 
+    # Clearing first and last day from the data
     valid = datetime(year, 1, 1).weekday()
     data[:valid, 0] = np.nan
     valid = datetime(year, 12, 31).weekday()
+    # data[:,x1+1:] = np.nan
     data[valid + 1:, x1] = np.nan
 
+    # # Showing data
+    # ax.imshow(data, extent=[0, 53, 0, 7], zorder=10, vmin=-1, vmax=1,
+    #           cmap="RdYlBu", origin="lower", alpha=.75)
     return ax

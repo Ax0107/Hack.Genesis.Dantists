@@ -9,8 +9,12 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 import pandas as pd
 import numpy as np
-from heatmap import calmap
-import matplotlib.pyplot as plt
+from dateutil.relativedelta import relativedelta
+
+from promo_prediction import predict
+
+import plotly.graph_objects as go
+
 
 promo_history = pd.read_excel('promo_history.xlsx', engine='openpyxl')
 sales_history = pd.read_csv('sales_history.csv')
@@ -83,12 +87,12 @@ app.layout = html.Div([
                     html.Div(children="Товар", className="menu-title"),
 
                     dcc.Dropdown(
-                        id="region-filter",
+                        id="product-filter",
                         options=[
-                            {"label": f'ID {i}', "value": f'ID {i}'}
+                            {"label": f'ID {i}', "value": f'{i}'}
                             for i in products
-                        ],
-                        value=f"ID {products[0]}",
+                        ]+[{'label': 'Все', 'value': 'all'}],
+                        value="all",
                         clearable=False,
                         className="dropdown",
                     ),
@@ -110,9 +114,9 @@ app.layout = html.Div([
                     dcc.DatePickerRange(
                         id="date-range",
                         min_date_allowed=datetime.datetime.fromisoformat('2018-01-01'),
-                        max_date_allowed=datetime.datetime.fromisoformat('2021-01-01'),
-                        start_date=datetime.datetime.fromisoformat('2020-01-01'),
-                        end_date=datetime.datetime.fromisoformat('2020-02-01'),
+                        max_date_allowed=datetime.datetime.fromisoformat('2022-01-01'),
+                        start_date=datetime.datetime.fromisoformat('2021-01-01'),
+                        end_date=datetime.datetime.fromisoformat('2021-02-01'),
                     ),
                 ]
             ),
@@ -126,7 +130,7 @@ app.layout = html.Div([
 
     html.Div(
         children=[
-            html.Div([], className='card', id='calmap'),
+            html.Div([dcc.Graph(id='calmap')], className='card'),
 
             html.Div(
                 children=[], id='graphs'
@@ -143,12 +147,15 @@ app.layout = html.Div([
 
 
 @app.callback([Output('graphs', 'children'),
-              Output('calmap', 'children')],
+              Output('calmap', 'figure')],
               [Input('btn-calculate', 'n_clicks')],
-              [State('input-budget', 'value')])
-def update_output(n, bugdet):
+              [State('input-budget', 'value'),
+               State("date-range", "start_date"),
+               State("date-range", "end_date"),
+               State("product-filter", "value")])
+def update_output(n, budget, start_date, end_date, product):
     if not n:
-        return [], []
+        return [], {}
 
     children = []
 
@@ -175,14 +182,30 @@ def update_output(n, bugdet):
         graph = dcc.Graph(id=f"profit-chart-{year}", figure=profit_figure),
         children.append(graph[0])
 
-    fig = plt.figure(figsize=(8, 4.5), dpi=100)
-    X = np.linspace(-1, 1, 53 * 7)
-    ax = plt.subplot(311, xlim=[0, 53], ylim=[0, 7], frameon=False, aspect=1)
-    I = 1.2 - np.cos(X.ravel()) + np.random.normal(0, .2, X.size)
-    calmap(ax, 2017, I.reshape(53, 7).T)
-    plt.savefig("assets/calendar-heatmap.png", dpi=300)
+    start_date = datetime.datetime.fromisoformat(start_date)
+    end_date = datetime.datetime.fromisoformat(end_date)
+    prediction = predict(budget, start_date, end_date, product=product, products=products)
 
-    return children, html.Img(src=app.get_asset_url("calendar-heatmap.png"), width='auto')
+    year = start_date.year
+    days_from_start = (datetime.datetime.fromisoformat(f"{year}-01-01") - start_date).days
+    delta = (end_date - start_date).days - 1
+
+    data = np.full(371, 0).astype(float)
+    np.put(data, range(days_from_start, days_from_start + delta + 1), prediction)
+
+    dates = [start_date + datetime.timedelta(days=x) for x in range(1, delta+2, 7)]
+
+    fig = go.Figure(data=go.Heatmap(
+        z=data.reshape(53, 7).T,
+        x=dates,
+        y=["Day"],
+        colorscale='Viridis'))
+
+    fig.update_layout(
+        title='Успешность промо-акций',
+        xaxis_nticks=36)
+
+    return children, fig
 
 
 if __name__ == '__main__':
